@@ -12,12 +12,11 @@
 我們就會看到燈光稍微的變亮了
 
 ## Duty Cycle 
-ON佔的百分比  
-模擬出的電壓 
-'''
-V = V<sub>on</sub> x duty cycle (%)
-'''
-duty cycle 越高模擬出的電壓越高
+ON佔週期的百分比  
+```
+模擬出的電壓 V = V_on x duty cycle (%)
+```
+duty cycle 越高，模擬出的電壓越高
 
 ## Arduino PWM 的使用方式
 - 格式：analogWrite(pin, value)
