@@ -1,0 +1,19 @@
+int led = 9;
+double brightness = 0;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  double sensorValue = analogRead(A0);
+  Serial.println(sensorValue);
+  //delay(1);        // delay in between reads for stability
+  
+  brightness = (sensorValue/1023)*255;
+  analogWrite(led, brightness);
+  
+  delay(30);
+}
