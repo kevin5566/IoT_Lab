@@ -10,8 +10,8 @@ from matplotlib.lines import Line2D
 id=[]
 x=[0]
 y=[0]
-l_bound=-1.0
-h_bound=10.0
+lower_bound=-1.0
+upper_bound=10.0
 
 class Server(BaseHTTPRequestHandler):
     global id, x, y
@@ -21,33 +21,41 @@ class Server(BaseHTTPRequestHandler):
         self.end_headers()
     
     def moving(self):
+        ## Start Point: (x[-3], y[-3])
+        ## Next Point:  (x[-2], y[-2])
+        ## End Point:   (x[-1], y[-1])
+        
         time.sleep(5)   # delays 5 seconds
     
     def do_GET(self):
+        
         ## http Cmd Processing ##
         cmd = self.path.strip().split('/')    # self.path
         del cmd[0]
         
-        ## Moving Coordination ##
-        x.append(int(cmd[0]))   # idx: i
-        y.append(y[-1])         # idx: i
-        x.append(x[-1])         # idx: i+1
-        y.append(int(cmd[1]))   # idx: i+1
+        ## Moving Position Coordination ##
+        x.append(int(cmd[0]))   # idx: i-1
+        y.append(y[-1])         # idx: i-1
+        x.append(x[-1])         # idx: i
+        y.append(int(cmd[1]))   # idx: i
         
         ## Plot a Routing Graph ##
         routing_fig = plt.figure()
         ax=routing_fig.add_subplot(111)
         line=Line2D(x, y)
         ax.add_line(line)
-        ax.set_xlim(l_bound, h_bound)
-        ax.set_ylim(l_bound, h_bound)
+        ax.set_xlim(lower_bound, upper_bound)
+        ax.set_ylim(lower_bound, upper_bound)
         plt.show()
-        
+
         ## Moving Function ##
         #self.moving()
+        #print cmd
 
+        ## Respond ##
         self._set_headers()
-        self.wfile.write("hi!")
+        self.wfile.write("Point ("+cmd[0]+", "+cmd[1]+") Queueing Done !!")
+############### race condition ?? ##############
 
 def run(server_class=HTTPServer, handler_class=Server, port=8080):
     server_address = ('', port)
