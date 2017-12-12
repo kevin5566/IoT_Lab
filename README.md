@@ -1,6 +1,10 @@
 # IoT_Lab
 This is a in-course lab of **System Design Topic - Design for IoT Middleware**, NTUCSIE 2017 Fall 
 
+## Pi connect method
+* sudo screen /dev/ttyUSB0 115200
+* sudo ssh pi@10.5.2.15
+
 ## 20171031
 * http://10.5.2.15:8080/status  
 show RGB value of LED  
